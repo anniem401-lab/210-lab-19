@@ -50,6 +50,7 @@ void deleteList(Node *&); // Function to delete the linked list
 
 int main() 
 {
+    srand(time(0)); // Seed for random number generation
     vector<Movie> movieReviews; // Vector to hold Movie objects
 
     // Read movie reviews from a file
@@ -94,33 +95,68 @@ int main()
 
         if (movieReviews.size() >= 3) break; // Limit to 3 reviews
     }
+    fin.close(); // Close the file
 
-    // Movie objects (4 total)
+    // Movie objects (4 total) with three reviews each and a random rating
     cout << endl << "----------------------------";
     cout << endl << " Movie 1 Details ";
     cout << endl << "----------------------------" << endl;
     Movie m1;
     m1.setTitle("Paranorman");
-
+    // Assign reviews and ratings from the vector
+    for (size_t i = 0; i < 3 && i < movieReviews.size(); i++) 
+    {
+        m1.setReview(movieReviews[i].getReview());
+        m1.setRating(movieReviews[i].getRating());
+        print(m1); // Print movie details
+        cout << endl;
+    }
 
     cout << endl << "----------------------------" << endl;
     cout << " Movie 2 Details ";
     cout << endl << "----------------------------" << endl;
     Movie m2;
     m2.setTitle("The Incredibles");
+    // Assign reviews and ratings from the vector
+    for (size_t i = 3; i < 6 && i < movieReviews.size(); i++) 
+    {
+        m2.setReview(movieReviews[i].getReview());
+        m2.setRating(movieReviews[i].getRating());
+        print(m2); // Print movie details
+        cout << endl;
+    }
 
     cout << endl << "----------------------------" << endl;
     cout << " Movie 3 Details ";
     cout << endl << "----------------------------" << endl;
     Movie m3;
     m3.setTitle("Coraline");
+    // Assign reviews and ratings from the vector
+    for (size_t i = 6; i < 9 && i < movieReviews.size(); i++) 
+    {
+        m3.setReview(movieReviews[i].getReview());
+        m3.setRating(movieReviews[i].getRating());
+        print(m3); // Print movie details
+        cout << endl;
+    }
 
     cout << endl << "----------------------------" << endl;
     cout << " Movie 4 Details ";
     cout << endl << "----------------------------" << endl;
     Movie m4;
     m4.setTitle("Takeout");
-
+    // Assign reviews and ratings from the vector
+    for (size_t i = 9; i < 12 && i < movieReviews.size(); i++) 
+    {
+        m4.setReview(movieReviews[i].getReview());
+        m4.setRating(movieReviews[i].getRating());
+        print(m4); // Print movie details
+        cout << endl;
+    }
+    // Calls outputlist function to display the linked list
+    Node *head = nullptr; // Initialize head of the linked list
+    // Add nodes to the linked list for each movie review
+    outputList(head); // Output the linked list
     cout << endl;
     return 0;
 }
@@ -138,11 +174,11 @@ void outputList(Node *head)
     cout << endl << "Movie List:" << endl;
     cout << "----------------------------" << endl;
 
-    // Traverse the list and print each node's data
-    while (current != nullptr) 
+    // Traverse the list and print all reviews and ratings
+    while (current != nullptr)  
     {
-        cout << setw(W15) << "Rating: " << current->rating << endl;
-        cout << setw(W15) << "Review: " << current->review << endl;
+        cout << "Review: " << current->review << endl;
+        cout << "Rating: " << current->rating << endl;
         cout << "----------------------------" << endl;
         current = current->next; // Move to the next node
     }
