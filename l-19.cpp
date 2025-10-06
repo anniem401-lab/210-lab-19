@@ -32,20 +32,44 @@ void setReview(string r)    { review = r; }
 
 double getRating()              { return rating; }
 void setRating(double r)    { rating = r; }
-
-// Print method to display movie information 
-void print() 
-{
-    cout << setw(W15) << "Title: " << title << endl;
-    cout << setw(W15) << "Review: " << review << endl;
-    cout << setw(W15) << "Rating: " << rating << endl;
-}
 };
 
 void print(Movie);
 
 int main() 
 {
+    // Movie objects (4 total)
+    cout << endl << "----------------------------";
+    cout << endl << " Movie 1 Details ";
+    cout << endl << "----------------------------" << endl;
+    Movie m1;
+    m1.setTitle("Paranorman");
+
+    cout << endl << "----------------------------" << endl;
+    cout << " Movie 2 Details ";
+    cout << endl << "----------------------------" << endl;
+    Movie m2;
+    m2.setTitle("The Incredibles");
+
+    cout << endl << "----------------------------" << endl;
+    cout << " Movie 3 Details ";
+    cout << endl << "----------------------------" << endl;
+    Movie m3;
+    m3.setTitle("Coraline");
+
+    cout << endl << "----------------------------" << endl;
+    cout << " Movie 4 Details ";
+    cout << endl << "----------------------------" << endl;
+    Movie m4;
+    m4.setTitle("Takeout");
+
     cout << endl;
     return 0;
+}
+
+void print(Movie m) 
+{
+    cout << setw(W15) << "Title: " << m.getTitle() << endl;
+    cout << setw(W15) << "Review: " << m.getReview() << endl;
+    cout << setw(W15) << "Rating: " << m.getRating() << endl;
 }
