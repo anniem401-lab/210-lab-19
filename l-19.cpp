@@ -4,11 +4,14 @@
 // This program collects data to be implemented into a linked list where
 // each node contains a movie title, review, and rating. New nodes are
 // added to the front of the list. The program displays the movie data
-// from the linked list.
+// from the linked list. Each movie has three reviews and random ratings
+// between 1.0 and 5.0.
 
-#include <iostream>
-#include <iomanip>
-#include <string>
+#include <fstream> // For file handling
+#include <iostream> // For input/output
+#include <iomanip> // For formatted output
+#include <string> // For string handling
+#include <vector> // For using vectors
 using namespace std;
 
 const int W15 = 15;
@@ -47,12 +50,58 @@ void deleteList(Node *&); // Function to delete the linked list
 
 int main() 
 {
+    vector<Movie> movieReviews; // Vector to hold Movie objects
+
+    // Read movie reviews from a file
+    ifstream fin;
+    fin.open("moviereviews.txt");
+
+    // Checks if file opened successfully
+    if (!fin.good()) throw "I/O error";
+
+    // Reads movie reviews from the file and stores them in the vector
+    string reviews;
+    while (getline(fin, reviews))
+    {
+        Movie m;
+        m.setReview(reviews);
+        m.setRating((rand() % 50 + 10) / 10.0); // Random rating between 1.0 and 5.0
+        movieReviews.push_back(m);
+    }
+    fin.close(); // Close the file
+
+    // Reopen the file to read movie review line by line
+    fin.open("moviereviews.txt");
+    if (!fin.good()) throw "I/O error";
+
+    while (!fin.eof()) 
+    {
+        Movie m;
+        string reviews;
+        getline(fin, reviews);
+
+        if (!getline(fin, reviews)) break; // Break if no more lines
+
+        // Read movie reviews and assign 3 reviews to each Movie object
+        for (size_t i = 0; i < movieReviews.size(); i++) 
+        {
+            if (movieReviews[i].getReview().empty()) 
+            {
+                movieReviews[i].setReview(reviews);
+                break; // Assign review to the first Movie object without a review
+            }
+        }
+
+        if (movieReviews.size() >= 3) break; // Limit to 3 reviews
+    }
+
     // Movie objects (4 total)
     cout << endl << "----------------------------";
     cout << endl << " Movie 1 Details ";
     cout << endl << "----------------------------" << endl;
     Movie m1;
     m1.setTitle("Paranorman");
+
 
     cout << endl << "----------------------------" << endl;
     cout << " Movie 2 Details ";
