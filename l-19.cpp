@@ -1,6 +1,11 @@
 // COMSC-210 | Lab 19 | Annie Morales
 // IDE used: Visual Studio Code
 
+// This program collects data to be implemented into a linked list where
+// each node contains a movie title, review, and rating. New nodes are
+// added to the front of the list. The program displays the movie data
+// from the linked list.
+
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -34,7 +39,11 @@ double getRating()              { return rating; }
 void setRating(double r)    { rating = r; }
 };
 
-void print(Movie);
+// Function prototypes
+void print(Movie); // Function to print movie details
+void outputList(Node *); // Function to output the linked list
+void addNode(Node *&, string, string, double); // Function to add a node to the list
+void deleteList(Node *&); // Function to delete the linked list
 
 int main() 
 {
@@ -72,4 +81,45 @@ void print(Movie m)
     cout << setw(W15) << "Title: " << m.getTitle() << endl;
     cout << setw(W15) << "Review: " << m.getReview() << endl;
     cout << setw(W15) << "Rating: " << m.getRating() << endl;
+}
+
+void outputList(Node *head) 
+{
+    Node *current = head; // Pointer to traverse the list
+    cout << endl << "Movie List:" << endl;
+    cout << "----------------------------" << endl;
+
+    // Traverse the list and print each node's data
+    while (current != nullptr) 
+    {
+        cout << setw(W15) << "Rating: " << current->rating << endl;
+        cout << setw(W15) << "Review: " << current->review << endl;
+        cout << "----------------------------" << endl;
+        current = current->next; // Move to the next node
+    }
+}
+
+void addNode(Node *&head, string review, string title, double rating) 
+{
+    Node *newNode = new Node; // Create a new node
+    newNode->review = review; // Set the review
+    newNode->rating = rating; // Set the rating
+    newNode->next = head; // Point new node to the current head
+    head = newNode; // Update head to the new node
+}
+
+void deleteList(Node *&head) 
+{
+    Node *current = head; // Pointer to traverse the list
+    Node *nextNode; // Pointer to hold the next node
+
+    // Traverse the list and delete each node
+    while (current != nullptr) 
+    {
+        nextNode = current->next; // Store the next node
+        delete current; // Delete the current node
+        current = nextNode; // Move to the next node
+    }
+    head = nullptr; // Set head to nullptr after deletion
+    cout << "Linked list deleted." << endl;
 }
