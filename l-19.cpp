@@ -2,8 +2,11 @@
 // IDE used: Visual Studio Code
 
 #include <iostream>
-
+#include <iomanip>
+#include <string>
 using namespace std;
+
+const int W15 = 15;
 
 struct Node // Node structure for linked list
 {
@@ -14,26 +17,32 @@ struct Node // Node structure for linked list
 
 class Movie
 {
-    private:
-        string title; // Movie title
-        string review; // Movie review
-        double rating; // Movie rating
+private:
+    string title; // Movie title
+    string review; // Movie review
+    double rating; // Movie rating
 
-    public:
-        Movie(string t, string rev, double rat) 
-        {
-            title = t;
-            review = rev;
-            rating = rat;
-        }
+public:
+// Getters and Setters
+string getTitle()               { return title; }
+void setTitle(string t)     { title = t; }
 
-        void displayInfo() 
-        {
-            cout << "Title: " << title << endl;
-            cout << "Review: " << review << endl;
-            cout << "Rating: " << rating << endl;
-        }
+string getReview()              { return review; }
+void setReview(string r)    { review = r; }
+
+double getRating()              { return rating; }
+void setRating(double r)    { rating = r; }
+
+// Print method to display movie information 
+void print() 
+{
+    cout << setw(W15) << "Title: " << title << endl;
+    cout << setw(W15) << "Review: " << review << endl;
+    cout << setw(W15) << "Rating: " << rating << endl;
+}
 };
+
+void print(Movie);
 
 int main() 
 {
