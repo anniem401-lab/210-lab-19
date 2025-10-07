@@ -45,11 +45,12 @@ void setRating(double r)    { rating = r; }
 // Function prototypes
 void print(Movie); // Function to print movie details
 void outputList(Node *); // Function to output the linked list
-void addNode(Node *&, string, string, double); // Function to add a node to the list
+void addNode(Node *&, string, double); // Function to add a node to the list
 void deleteList(Node *&); // Function to delete the linked list
 
 int main() 
 {
+    Node *head = nullptr; // Initialize head of the linked list
     srand(time(0)); // Seed for random number generation
     vector<Movie> movieReviews; // Vector to hold Movie objects
 
@@ -96,6 +97,12 @@ int main()
         if (movieReviews.size() >= 3) break; // Limit to 3 reviews
     }
     fin.close(); // Close the file
+
+    // Add each review and rating to the linked list
+    for (int i = 0; i < movieReviews.size(); i++) 
+    {
+        addNode(head, movieReviews[i].getReview(), movieReviews[i].getRating());
+    }
 
     // Movie objects (4 total) with three reviews each and a random rating
     cout << endl << "----------------------------";
@@ -153,11 +160,11 @@ int main()
         print(m4); // Print movie details
         cout << endl;
     }
-    // Calls outputlist function to display the linked list
-    Node *head = nullptr; // Initialize head of the linked list
-    // Add nodes to the linked list for each movie review
+    cout << endl << "Summary of List of Reviews:" << endl;
+    cout << "----------------------------" << endl;
     outputList(head); // Output the linked list
     cout << endl;
+    deleteList(head); // Delete the linked list
     return 0;
 }
 
@@ -170,10 +177,12 @@ void print(Movie m)
 
 void outputList(Node *head) 
 {
-    Node *current = head; // Pointer to traverse the list
-    cout << endl << "Movie List:" << endl;
-    cout << "----------------------------" << endl;
-
+    Node* current = head; // Pointer to traverse the list
+    if (current == nullptr) 
+    {
+        cout << "The list is empty." << endl;
+        return;
+    }
     // Traverse the list and print all reviews and ratings
     while (current != nullptr)  
     {
@@ -184,7 +193,7 @@ void outputList(Node *head)
     }
 }
 
-void addNode(Node *&head, string review, string title, double rating) 
+void addNode(Node *&head, string review, double rating) 
 {
     Node *newNode = new Node; // Create a new node
     newNode->review = review; // Set the review
